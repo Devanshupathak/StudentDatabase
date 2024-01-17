@@ -45,11 +45,38 @@ class DataHelper (private val context: Context) :
         val success = db.insert(TABLE_NAME, null, values)
         db.close()
         if (success.toInt() == -1) {
+            Toast.makeText(context, "Not successfull", Toast.LENGTH_SHORT).show()
+            return false
+        } else {
             Toast.makeText(context, "Success Insert", Toast.LENGTH_SHORT).show()
             return true
         }
     }
-    
+
+    fun deleteStudent(student: Student) {
+        var db = this.writableDatabase
+        val selectionArgs = arrayOf(student.nim.toString())
+        db.delete(TABLE_NAME, KEY_NIM + " = ? ", selectionArgs)
+    }
+
+    fun getAllStudent(): ArrayList<Student> {
+        var db = this.writableDatabase
+        var studentList: ArrayList<Student> = ArrayList()
+        val selectAll = "SELECT * FROM " + TABLE_NAME
+        val cursor = db.rawQuery(selectAll, null)
+        if (cursor.moveToFirst()){
+            do {
+                val student = Student()
+                student.nim = cursor.getInt(0)
+                student.name = cursor.getString(1)
+                student.gender = cursor.getString(2)
+                student.faculty = cursor.getString(3)
+                studentList.add(student)
+            } while (cursor.moveToNext())
+    }
+    return studentList
 }
+    }
+
 
 

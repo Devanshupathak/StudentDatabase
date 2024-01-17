@@ -64,5 +64,8 @@
         android:inputType="text"
         android:hint="Faculty"
         style="@style/editTextStyle"/>
-    <include layout="@layout/component_button_insert_conf"/>
+
+    <include
+        android:id="@+id/bins"
+        layout="@layout/component_button_insert_conf" />
 </LinearLayout>
